@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="outer-div">
+            <div class="inner-div">
+                <h3 class="instruction">Upload your image</h3>
+                <p class="formats">File should be Jpeg, Png, ...</p>
+                <div class="upload-div">
+                    <img src="image-placeholder.svg" alt="Uploaded Image">
+                    <p class="upload-text">Drag & Drop your image here</p>
+                </div>
+                <p class="or-text">Or</p>
+                
+                <form>
+                    <input type="file" id="file-upload" class="input" accept="image/*" value>
+                    <label for="file-upload" class="file-button">Choose a file</label>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        created by@<a href="kanchiatwar@gmail.com">username</a>- devChallenges.io
+    </div>
+
+    <div class="container2">
+        <div class="uploading-layout">
+            <p class="heading">Uploading...</p>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uploaded" style="display: none">
+        <span class="icon material-icons-round">check_circle</span>
+        <h3>Uploaded Successfully!</h3>
+        <img id="preview-image" alt="preview" class="preview">
+        <p class="link">
+            <span id="download-link"> </span>
+            <button class="copy-btn">Copy Link</button>
+        </p>
+    </div>   
+    
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+            const fileUploadInput = document.getElementById("file-upload");
+            const uploadingLayout = document.querySelector(".uploading-layout");
+            const outerdiv = document.querySelector(".outer-div");
+            const uploadedDiv = document.querySelector(".uploaded");
+
+            function showUploadingLayout() {
+                uploadingLayout.style.display = "block";
+                outerdiv.style.display = "none";
+                uploadedDiv.style.display = "none";
+            } // Added closing curly brace
+
+            function hideUploadingLayout() {
+                uploadingLayout.style.display = "none";
+                outerdiv.style.display = "block"; // Changed to "block"
+                uploadedDiv.style.display = "flex";
+            } // Added closing curly brace
+
+            fileUploadInput.addEventListener("change", function() {
+                showUploadingLayout();
+
+                let progress = 0;
+                let progressBarFill = document.querySelector(".progress-bar-fill");
+                let interval = setInterval(function() {
+                    progress += 1;
+                    progressBarFill.style.width = progress + "%";
+
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        hideUploadingLayout();
+                    }
+                }, 50);
+            });
+        });
+
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
